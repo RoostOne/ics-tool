@@ -6,10 +6,9 @@ import pandas as pd
 def create_app():
     calendar = Calendar()
 
-    st.title("📆 CSV to Calendar Converter")
-    # add a headline
-    st.write("Create a calendar from a CSV file")
-
+    # Read the Streamlit_Intro.md and display it
+    with open("Streamlit_Intro.md", "r") as f:
+        st.markdown(f.read())
 
     # File Uploader 
     st.subheader("Upload a CSV file")
