@@ -1,5 +1,6 @@
 # A Calenderclass that contains a list of CalendarEntry objects, which can print out the entries in a human-readable format and create a ics file from the entries.
 from datetime import datetime
+import pandas as pd
 
 from Calendar.CalendarEntry import CalendarEntry
 
@@ -43,6 +44,17 @@ class Calendar:
                 start_time, end_time = self.get_start_end_time(time, date)
                 entry = CalendarEntry(title, start_time, end_time, location)  # Assuming you have a CalendarEntry class
                 self.add_entry(entry)
+
+    # from csv but with a file
+    def from_csv(self, file):
+        next(file)
+        for line in file:
+            # line as string
+            line = line.decode("utf-8")
+            date, time, title, location = line.strip().split(";")
+            start_time, end_time = self.get_start_end_time(time, date)
+            entry = CalendarEntry(title, start_time, end_time, location)
+            self.add_entry(entry)
     
     # function gets a string of the date and returns start and end time as datetime objects
     def get_start_end_time(self, time_str, date_str):
@@ -86,3 +98,15 @@ class Calendar:
             entry = CalendarEntry(row["Title"], start_time, end_time, row["Location"])
             print(entry)
             self.add_entry(entry)
+        
+    # Calendar to dataframe Date; Start Time; End Time; Title; Location
+    def to_df(self):
+        data = {
+            "Date": [entry.start_time.strftime("%d.%m.%Y") for entry in self.entries],
+            "Start Time": [entry.start_time.strftime("%H:%M") for entry in self.entries],
+            "End Time": [entry.end_time.strftime("%H:%M") for entry in self.entries],
+            "Title": [entry.title for entry in self.entries],
+            "Location": [entry.location for entry in self.entries]
+        }
+        df = pd.DataFrame(data)
+        return df

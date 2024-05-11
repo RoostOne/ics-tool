@@ -29,6 +29,29 @@ def create_app():
         calendar.to_ics("calendar.ics")
         st.write("Calendar created successfully")
 
+    # Add a button to upload a csv file
+    uploaded_file = st.file_uploader("Upload a CSV file", type=["csv"])
+
+    # event when the file is uploaded
+    if uploaded_file is not None:
+        calendar = Calendar()
+        # read the csv file into a Calendar object
+        # path of uploaded file
+        calendar.from_csv(uploaded_file)
+
+        # Calendar to dataframe Date; Start Time; End Time; Title; Location
+        df_import = calendar.to_df()
+        # show the dataframe in the edited_df 1^
+
+        st.write(df_import)
+
+
+        if st.button("Create Calendar from CSV"):
+            calendar = Calendar()
+            calendar.from_df(df)
+            calendar.to_ics("calendar.ics")
+            st.write("Calendar created successfully")
+
 
 
 def main():
