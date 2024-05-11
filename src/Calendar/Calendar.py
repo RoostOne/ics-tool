@@ -77,3 +77,12 @@ class Calendar:
         if start_time == end_time:
             end_time = end_time.replace(hour=end_time.hour + 1)
         return start_time, end_time
+    
+    # from dataframe to calendar entries
+    def from_df(self, df):
+        for index, row in df.iterrows():
+            start_time = datetime.strptime(row["Date"] + " " + row["Start Time"], "%d.%m.%Y %H:%M")
+            end_time = datetime.strptime(row["Date"] + " " + row["End Time"], "%d.%m.%Y %H:%M")
+            entry = CalendarEntry(row["Title"], start_time, end_time, row["Location"])
+            print(entry)
+            self.add_entry(entry)
