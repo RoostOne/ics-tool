@@ -1,5 +1,5 @@
 # CSV to ics converter
-The tool can be used here: [CSV to Calendar Converter](https://share.streamlit.io/roostone/ics-tool/main/app.py)
+The tool can be used here: [CSV to Calendar Converter](https://csv-to-ics.streamlit.app/)
 ## A python program to convert a CSV file to an ics file
 This program is a simple python program that converts a CSV file to an ics file. It is using the datetime package to handle the dates and times. 
 
