@@ -7,8 +7,8 @@ def create_app():
     calendar = Calendar()
 
     # Read the Streamlit_Intro.md and display it
-    with open("Streamlit_Intro.md", "r") as f:
-        st.markdown(f.read())
+    #with open("Streamlit_Intro.md", "r") as f:
+    #    st.markdown(f.read())
 
     # File Uploader 
     st.subheader("Upload a CSV file")
