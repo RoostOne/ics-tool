@@ -30,7 +30,28 @@ class Calendar:
                 f.write(f"LOCATION:{entry.location}\n")
                 f.write("END:VEVENT\n")
             f.write("END:VCALENDAR\n")
-        
+
+    def to_ics(self):
+        ical_strint = ""
+
+        ical_strint += "BEGIN:VCALENDAR\n"
+        ical_strint += "VERSION:2.0\n"
+        ical_strint += "PRODID:-//hacksw/handcal//NONSGML v1.0//EN\n"
+
+        for entry in self.entries:
+            ical_strint += "BEGIN:VEVENT\n"
+            ical_strint += f"SUMMARY:{entry.title}\n"
+            ical_strint += f"DTSTAMP:{datetime.now().strftime('%Y%m%dT%H%M%SZ')}\n"
+            start_time_utc = entry.get_utc_times(entry.start_time)
+            end_time_utc = entry.get_utc_times(entry.end_time) 
+            ical_strint += f"DTSTART:{start_time_utc.strftime('%Y%m%dT%H%M%SZ')}\n"
+            ical_strint += f"DTEND:{end_time_utc.strftime('%Y%m%dT%H%M%SZ')}\n"
+            ical_strint += f"LOCATION:{entry.location}\n"
+            ical_strint += "END:VEVENT\n"
+
+        ical_strint += "END:VCALENDAR\n"
+
+        return ical_strint
 
     # read the entries from a csv file and create a calendar from them
     # Date;Time;Location

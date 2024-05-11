@@ -11,6 +11,14 @@ The CSV file should have the following columns:
 
 The program will read the CSV file and create an ics file with the events. The ics file can be imported into a calendar application like Google Calendar, Outlook, etc.
 
+### Webpage Interface
+The program has a simple webpage interface that allows the user to upload the CSV file and download the ics file. The webpage is using the Streamlit package to create the interface.
+
+To run the webpage interface, run the following command:
+```bash
+streamlit run app.py
+```
+
 ## How to use   
 1. Clone the repository
 2. Install the required packages with `pip install -r requirements.txt`

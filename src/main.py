@@ -4,37 +4,20 @@ import pandas as pd
 
 # function for creating a streamlit app with a table and a headline 
 def create_app():
-    st.title("Calendar")
+    calendar = Calendar()
 
-    # add a dataframe with initial calendar information
-    # Create an initial DataFrame with calendar information
-    data = {
-        "Date": ["20.05.2024", "21.05.2024", "22.05.2024"],
-        "Start Time": ["09:00", "10:00", "11:00"],
-        "End Time": ["10:00", "11:00", "12:00"],
-        "Title": ["Meeting", "Deadline", "Team Building Event"],
-        "Location": ["Office", "Home", "Park"]
-    }
-    df = pd.DataFrame(data)
+    st.title("📆 CSV to Calendar Converter")
+    # add a headline
+    st.write("Create a calendar from a CSV file")
 
-    # make the dataframe editable
-    st.write("Calendar Information")
-    edited_df = st.data_editor(df, num_rows="dynamic")
 
-    # add a button to create an ics file
-    if st.button("Create Calendar"):
-        calendar = Calendar()
-        calendar.from_df(edited_df)
-        
-        calendar.to_ics("calendar.ics")
-        st.write("Calendar created successfully")
-
-    # Add a button to upload a csv file
+    # File Uploader 
+    st.subheader("Upload a CSV file")
+        # Add a button to upload a csv file
     uploaded_file = st.file_uploader("Upload a CSV file", type=["csv"])
 
     # event when the file is uploaded
     if uploaded_file is not None:
-        calendar = Calendar()
         # read the csv file into a Calendar object
         # path of uploaded file
         calendar.from_csv(uploaded_file)
@@ -45,12 +28,27 @@ def create_app():
 
         st.write(df_import)
 
+        # create ics file to download
+        calendar = Calendar()
+        calendar.from_df(df_import)
+        
+        st.write("Calendar created successfully")
 
-        if st.button("Create Calendar from CSV"):
-            calendar = Calendar()
-            calendar.from_df(df)
-            calendar.to_ics("calendar.ics")
-            st.write("Calendar created successfully")
+
+        st.subheader("Create a  ical Calendar")
+        st.write("Click the button below to create a calendar from the table above. The calendar will be saved as 'calendar.ics' in the download directory.")
+
+        
+        hello = calendar.to_ics()
+        # st download with examaple hellor world file
+        st.download_button(
+            label="Download ",
+            data=hello,
+            file_name="calendar.ics",
+            mime="text/plain",
+        )
+
+
 
 
 
